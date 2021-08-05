@@ -1,8 +1,11 @@
 const express = require('express')
 const app = express()
+var cors = require('cors')
 const coursesController = require('./course-controller')
 
 app.use(express.json());
+app.use(cors())
+
 const port = 3000
 
 app.get('/', (req, res) => res.send('Welcome to courses API'))
