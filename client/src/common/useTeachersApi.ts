@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { api } from './config';
 
 type Teacher = {
@@ -8,7 +8,7 @@ type Teacher = {
 }
 
 export default function useTeacherApi() {
-  const [teacher, setTeacher] = useState<Teacher[]>([])
+  const [teachers, setTeacher] = useState<Teacher[]>([])
   const [error, setError] = useState('')
 
   useEffect(() => {
@@ -20,5 +20,5 @@ export default function useTeacherApi() {
       .catch(err => setError(err))
   }, [])
 
-  return [teacher]
+  return { teachers, error }
 }

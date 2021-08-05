@@ -1,17 +1,25 @@
-// import React from 'react';
-import logo from './logo.svg';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
 import './App.css';
-import CourseList from './course-list';
-
+import AddTeacher from "./components/AddNewTeacher";
+import Home from "./components/home";
 
 function App() {
   return (
-    <>
-    {/* // <div className="App"> */}
-      <CourseList />
-    {/* // </div> */}
-    </>
-  );
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route exact path="/addTeacher">
+          <AddTeacher />
+        </Route>
+      </Switch>
+    </Router>
+     );
 }
-
 export default App;

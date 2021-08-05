@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import useTeacherApi from '../common/useTeachersApi';
 import styles from './course-list.module.css'
-import styled from 'styled-components'
-import { api } from './config';
-import useTeacherApi from './useTeachersApi';
+
 
 export default function CourseList() {
-  const [teachers] = useTeacherApi()
+  const {teachers, error} = useTeacherApi()
+
+  if(error){
+    return(
+      <>
+        <p>{error}</p>
+      </>
+    )
+  }
 
   return (
     <>
