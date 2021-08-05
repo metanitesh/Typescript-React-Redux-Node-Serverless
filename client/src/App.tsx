@@ -7,6 +7,7 @@ import {
 import './App.css';
 import AddTeacher from "./components/AddNewTeacher";
 import Home from "./components/home";
+import EditTeacher from "./EditTeacher";
 
 function App() {
   return (
@@ -18,8 +19,11 @@ function App() {
         <Route exact path="/addTeacher">
           <AddTeacher />
         </Route>
+        <Route exact path="/editTeacher/:id">
+          <EditTeacher />
+        </Route>
       </Switch>
     </Router>
-     );
+  );
 }
 export default App;
