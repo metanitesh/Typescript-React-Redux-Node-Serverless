@@ -39,7 +39,7 @@ app.post('/teachers', async(req, res) => {
   }
 
   await coursesController.addCourse(req.body)
-  res.send('ok')
+  res.json(req.body)
 })
 
 app.put('/teachers/:id', async(req, res) => {
