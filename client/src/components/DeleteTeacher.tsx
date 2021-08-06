@@ -3,10 +3,11 @@ import { useHistory } from 'react-router';
 import { api } from '../common/config';
 
 type DeleteTeacherProps = {
-  id: number
+  id: number,
+  refreshTeacherList: () => void
 }
 
-export default function DeleteTeacher({ id }: DeleteTeacherProps) {
+export default function DeleteTeacher({ id, refreshTeacherList }: DeleteTeacherProps) {
   const history = useHistory()
   return (
     <>
@@ -16,7 +17,7 @@ export default function DeleteTeacher({ id }: DeleteTeacherProps) {
         })
           .then(res => res.text()) // or res.json()
           .then(res => {
-            history.push("/?id=2")
+            refreshTeacherList()
           })
 
       }}>Delete</button>

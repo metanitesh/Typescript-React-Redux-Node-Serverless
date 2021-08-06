@@ -9,13 +9,21 @@ export default function EditTeacher() {
   const history = useHistory()
 
   useEffect(() => {
-    fetch(`${api}/teachers/${id}`)
-      .then(res => res.json())
-      .then(({ teacher, title }) => {
-        setName(teacher)
-        setCourse(title)
-      })
-      .catch(console.log)
+    async function fetchData() {
+      const res = await fetch(`${api}/teachers/${id}`)
+      const { teacher, title } = await res.json()
+      console.log(teacher, title)
+      setName(teacher)
+      setCourse(title)
+    }
+    fetchData()
+
+    // setCourse(title)
+    //   .then(res => res.json())
+    //   .then(({ teacher, title }) => {
+
+    //   })
+    //   .catch(console.log)
   }, [id])
 
   return (

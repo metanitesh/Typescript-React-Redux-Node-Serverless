@@ -8,6 +8,7 @@ import './App.css';
 import AddTeacher from "./components/AddNewTeacher";
 import Home from "./components/home";
 import EditTeacher from "./EditTeacher";
+import NoMatch from "./NoMatch";
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
         </Route>
         <Route exact path="/editTeacher/:id">
           <EditTeacher />
+        </Route>
+        <Route path="*">
+          <NoMatch />
         </Route>
       </Switch>
     </Router>
