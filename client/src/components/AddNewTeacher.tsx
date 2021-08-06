@@ -83,7 +83,7 @@ export default function AddTeacher() {
 
     }}>
       <label>Name:
-        <input type="text"
+        <input data-testid='teacher-name' type="text"
           placeholder="teacher name"
           value={state.teacher}
           onChange={(event) => {
