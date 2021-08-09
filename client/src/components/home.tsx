@@ -1,12 +1,26 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import CourseList from './course-list';
+import Delete from './Delete';
 
-export default function Home() {
+type CoursesListProps = {
+  courses: {
+    id: number;
+    courseTitle: string;
+    teacherName: string;
+  }[],
+  handleDelete: (id: number) => void
+}
+
+export default function Home(props: CoursesListProps) {
+  const { courses, handleDelete } = props;
   return (
     <>
-      <CourseList />
-      <Link to ="/addTeacher"> Add New Teacher</Link>
+      {courses.map((course) => (
+        <li key={course.id}>{course.courseTitle} thought by {course.teacherName}
+          <Link to={`/edit-course/${course.id}`}> Edit Course</Link>
+          <Delete id={course.id} handleDelete={handleDelete} />
+        </li>
+      ))}
     </>
   );
 }

@@ -2,8 +2,7 @@ const Pool = require("pg").Pool;
 const pool = new Pool({
     user:'postgres', // default postgres
     host:'localhost',
-    database:'coursesapp', // `my_todos_db`
-    // password:'your_password', //added during PostgreSQL and pgAdmin installation
+    database:'courses-app-db', // `my_todos_db`
     port:'5432' //default port
 });
 

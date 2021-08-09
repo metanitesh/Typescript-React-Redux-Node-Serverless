@@ -6,20 +6,26 @@ const coursesController = require('./course-controller')
 app.use(express.json());
 app.use(cors())
 
-const port = 3000
+const port = 8080
 
-app.get('/', (req, res) => res.send('Welcome to courses API'))
+app.get('/', (req, res) => res.json({
+  status: 'success',
+  message: 'Welcome to course API'
+}))
 
-app.get('/teachers', async (req, res) => {
+app.get('/courses', async (req, res) => {
   const courses = await coursesController.getCourses()
   res.json(courses)
 })
 
-app.get('/teachers/:id', async (req, res) => {
+app.get('/courses/:id', async (req, res) => {
   const {id} = req.params;
 
   if(isNaN(+id)){
-    res.send('Invalid Id')
+    res.json({
+      status: 'failed',
+      message: 'Invalid id'
+    })
   }
 
   const result = await coursesController.getCoursesById(id)
@@ -27,56 +33,105 @@ app.get('/teachers/:id', async (req, res) => {
   if(result){
     res.json(result)
   }else{
-    res.send('No record found')
+    res.json({
+      status: 'failed',
+      message: 'No record found for the Id'
+    })
   }
 })
 
 
-app.post('/teachers', async(req, res) => {
-  
-  if(!req.body.title || !req.body.teacher){
-    return res.send("Invalid Data")
-  }
-
-  await coursesController.addCourse(req.body)
-  res.json(req.body)
-})
-
-app.put('/teachers/:id', async(req, res) => {
-  const {id} = req.params;
-
-  if(isNaN(+id)){
-    res.send('Id must be a number')
-  }
-  
-  console.log(id)
-  const result = await coursesController.getCoursesById(id)
-  console.log(result)
-  if(!result){
-    res.send('No record for this ID')
-  }
-
-  const {title, teacher} = req.body
-
-  if(!req.body.title || !req.body.teacher){
-    return res.send("Invalid Data")
-  }
-
+app.post('/courses', async(req, res) => {
   console.log(req.body)
-  await coursesController.updateCourse(id, title, teacher)
-  res.send('ok')
-  
+  console.log('in post')
+  if(!req.body['course_title'] || !req.body['teacher_name']){
+    return res.send({
+      status: 'failed',
+      message: 'Invalid data'
+    })
+  }
+
+  const result = await coursesController.addCourse(req.body)
+  .catch(error => {
+    return res.json({
+      status: 'failed',
+      message: 'internal error occured'
+    })
+  })
+
+  return res.json({
+    status: 'success',
+    message: 'record inserted'
+  })
 })
 
-app.delete('/teachers/:id', async(req, res) => {
+app.put('/courses/:id', async(req, res) => {
   const {id} = req.params;
 
   if(isNaN(+id)){
-    res.send('Id must be a number')
+    res.json({
+      status: 'failed',
+      message: 'No record found for the ID'
+    })
+  }
+
+  const result = await coursesController.getCoursesById(id)
+  
+  if(!result){
+    return res.json({
+      status: 'failed',
+      message: "No record found for the ID"
+    })
+  }
+
+  const {course_title, teacher_name} = req.body
+
+  if(!course_title || !teacher_name){
+    return res.json({
+      status: 'failed',
+      message: 'Invalid data'
+    })
+  }
+
+  
+  const output = await coursesController.updateCourse(id, course_title, teacher_name)
+  .catch((err) => {
+    return res.json({
+      status: 'failed',
+      message: 'internal error occured'
+    })
+  })
+
+  console.log(result)
+  
+  res.json({
+    status: 'success',
+    message: 'record updated successfully'
+  })
+  
+})
+
+app.delete('/courses/:id', async(req, res) => {
+  const {id} = req.params;
+
+  if(isNaN(+id)){
+    res.json({
+      status: 'failed',
+      message: 'Invalid id'
+    })
   }
 
   await coursesController.deleteCourse(id)
-  res.send('ok')
+  .catch(err => {
+    res.json({
+      status: 'failed',
+      message: 'an internal error occured'
+    })
+  })
+  res.json({
+    status: 'success',
+    message: 'Record deleted successfully'
+  })
 })
 
 

@@ -1,6 +1,5 @@
 const db = require('./config')
 
-
 async function getCourses(){
   console.log('GET COURSES')
   const results = await db.query(`SELECT * FROM courses`)
@@ -16,19 +15,21 @@ async function getCoursesById(id){
   return result.rows[0];
 }
 
-async function addCourse({title, teacher}){
+async function addCourse({course_title, teacher_name}){
   console.log('INSERT COURSE')
   const result = await db
-  .query(`INSERT INTO courses (title, teacher) VALUES ($1, $2)`, [title, teacher])
-  .catch(console.log)
+  .query(`INSERT INTO courses ("course_title", "teacher_name") VALUES ($1, $2)`, [course_title, teacher_name])
+  .catch((error) => {
+    throw new Error(error);
+  })
   
   return result
 }
 
-async function updateCourse(id, title, teacher){
+async function updateCourse(id, course_title, teacher_name){
   console.log('UPDATE COURSE')
   const result = await db
-  .query(`UPDATE courses SET title=$1, teacher=$2 WHERE id=$3`, [title, teacher, id])
+  .query(`UPDATE courses SET course_title=$1, teacher_name=$2 WHERE id=$3`, [course_title, teacher_name, id])
   .catch(console.log)
   
   return result
