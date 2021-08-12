@@ -1,15 +1,18 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { selectSong } from './actions';
 import { Song } from './song-type';
+
 type SongProps = {
   song: Song,
-  setSelectedUrl: (url: string) => void
 }
 
-export default function SongElement({ song, setSelectedUrl }: SongProps) {
+export default function SongElement({ song }: SongProps) {
+  const dispatch = useDispatch()
   return (
     <>
       <li><a href='#' onClick={() => {
-        setSelectedUrl(song.previews['preview-lq-mp3'])
+        dispatch(selectSong(song.previews['preview-lq-mp3']))
       }}>
         {song.name}</a></li>
     </>

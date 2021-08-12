@@ -9,14 +9,13 @@ function App() {
 
   const [songs, setSongs] = useState<Song[]>([])
   const [selectedUrl, setSelectedUrl] = useState('')
-  console.log(songs)
-  console.log(selectedUrl)
+
   return (
     <div className="App">
-      <SearchBar setSongs={setSongs}></SearchBar>
-      <SongList songs={songs} setSelectedUrl={setSelectedUrl} />
-      <AudioPlayer url={selectedUrl} />
-
+      <div data-testid="testDiv">Hello World</div>
+      <SearchBar />
+      <SongList />
+      <AudioPlayer />
     </div>
   );
 }

@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { loadSong } from './actions';
 import { getUrl, callFreeSoundApi } from './api'
 import { Song } from './song-type'
 
-type SearchBarProps = {
-  setSongs: (songs: Song[]) => void
-}
 
-export default function SearchBar({ setSongs }: SearchBarProps) {
-
+export default function SearchBar() {
+  const dispatch = useDispatch()
   const [val, setVal] = useState('')
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -15,7 +14,7 @@ export default function SearchBar({ setSongs }: SearchBarProps) {
     const url = getUrl(val)
     const results = callFreeSoundApi(url)
       .then((data) => {
-        setSongs(data.results)
+        dispatch(loadSong(data.results))
       })
     // fetch()
   }
